@@ -1,7 +1,14 @@
 
+import os
+from dotenv import load_dotenv
 import requests
 import time
-API_KEY = "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"
+load_dotenv()
+API_KEY = os.getenv("OPENROUTER_API_KEY")
+
+if not API_KEY:
+    print("❌ API key not found. Check your .env file.")
+    exit()
 
 
 print("🎓 AI Campus Assistant (Level 1)")
