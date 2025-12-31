@@ -1,8 +1,21 @@
-
+import os
 import requests
-import time
-API_KEY = "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"
+from dotenv import load_dotenv
 
+load_dotenv()
+
+API_KEY = os.getenv("OPENROUTER_API_KEY")
+
+if not API_KEY:
+    print("❌ API key not found. Check your .env file.")
+    exit()
+
+HEADERS = {
+    "Authorization": f"Bearer {API_KEY}",
+    "Content-Type": "application/json",
+    "HTTP-Referer": "http://localhost",
+    "X-Title": "AI Campus Assistant"
+}
 
 print("🎓 AI Campus Assistant (Level 1)")
 print("Type 'exit' to quit\n")
@@ -21,10 +34,7 @@ while True:
 
     response = requests.post(
         "https://openrouter.ai/api/v1/chat/completions",
-        headers={
-            "Authorization": f"Bearer {API_KEY}",
-            "Content-Type": "application/json"
-        },
+        headers=HEADERS,
         json={
             "model": "mistralai/mistral-7b-instruct",
             "messages": [
@@ -44,27 +54,28 @@ while True:
 
     data = response.json()
 
-    if "choices" not in data or len(data["choices"]) == 0:
+    if not data.get("choices"):
         print("⚠️ Model gave no answer. Try rephrasing.")
         continue
 
     reply = data["choices"][0]["message"]["content"].strip()
 
-    if reply == "":
+    if reply:
+        print("AI:", reply)
+        continue
+
+    # 🔁 Retry only if reply is empty
     print("⚠️ Retrying with simpler wording...")
 
     retry = requests.post(
         "https://openrouter.ai/api/v1/chat/completions",
-        headers={
-            "Authorization": f"Bearer {API_KEY}",
-            "Content-Type": "application/json"
-        },
+        headers=HEADERS,
         json={
             "model": "mistralai/mistral-7b-instruct",
             "messages": [
                 {
                     "role": "user",
-                    "content": f"Explain chemistry like teaching a 10 year old:\n{user_input}"
+                    "content": f"Explain like teaching a 10 year old:\n{user_input}"
                 }
             ],
             "max_tokens": 120,
@@ -73,6 +84,6 @@ while True:
     )
 
     retry_data = retry.json()
-    if "choices" in retry_data and retry_data["choices"]:
+    if retry_data.get("choices"):
         print("AI:", retry_data["choices"][0]["message"]["content"])
-    continue
+
