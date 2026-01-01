@@ -1,19 +1,9 @@
-
 import os
-import requests
-from dotenv import load_dotenv
-
-import os
-from dotenv import load_dotenv
 import requests
 import time
-load_dotenv()
-API_KEY = os.getenv("OPENROUTER_API_KEY")
+from dotenv import load_dotenv
 
-if not API_KEY:
-    print("❌ API key not found. Check your .env file.")
-    exit()
-
+# Load environment variables
 load_dotenv()
 
 API_KEY = os.getenv("OPENROUTER_API_KEY")
@@ -49,12 +39,7 @@ while True:
         headers=HEADERS,
         json={
             "model": "mistralai/mistral-7b-instruct",
-            "messages": [
-                {
-                    "role": "user",
-                    "content": f"Answer clearly in simple English:\n{user_input}"
-                }
-            ],
+            "messages": [{"role": "user", "content": user_input}],
             "max_tokens": 150,
             "temperature": 0.3
         }
@@ -76,7 +61,7 @@ while True:
         print("AI:", reply)
         continue
 
-    # 🔁 Retry only if reply is empty
+    # Retry only if reply is empty
     print("⚠️ Retrying with simpler wording...")
 
     retry = requests.post(
@@ -98,4 +83,3 @@ while True:
     retry_data = retry.json()
     if retry_data.get("choices"):
         print("AI:", retry_data["choices"][0]["message"]["content"])
-
