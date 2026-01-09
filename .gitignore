@@ -1,0 +1,11 @@
+# Global ignores
+venv/
+__pycache__/
+.env
+
+# Python
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db

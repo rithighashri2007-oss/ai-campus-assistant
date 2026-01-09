@@ -1,4 +1,3 @@
-
 # AI Campus Assistant 🎓🤖
 
 This project is developed as part of a Tech Club selection task.

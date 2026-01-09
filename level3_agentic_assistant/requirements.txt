@@ -1,0 +1,2 @@
+requests        # to talk to OpenRouter API
+python-dotenv   # to load API key safely from .env
