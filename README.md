@@ -6,31 +6,14 @@ This project was developed as part of a **Tech Club AI Task**, focusing on clean
 
 ## 📂 Project Structure
 
-ai-campus-assistant/
+ai-campus-assistant/ ----------------------------------------------------------
+├── level1_basic_assistant/-->app.py--> 
+    README.md-->.gitignore
+├── level2_knowledge_assistant/ -->app.py-->embed.py--> data/ ===>README.md--> .gitignore
+level3_agentic_assistant/-->app.py-->agent.py-->tools.py-->memory.py-->data/ ===> README.md-->.gitignore
 │
-├── level1_basic_assistant/
-│   ├── app.py
-│   ├── README.md
-│   └── .gitignore
-│
-├── level2_knowledge_assistant/
-│   ├── app.py
-│   ├── embed.py
-│   ├── data/
-│   ├── README.md
-│   └── .gitignore
-│
-├── level3_agentic_assistant/
-│   ├── app.py
-│   ├── agent.py
-│   ├── tools.py
-│   ├── memory.py
-│   ├── data/
-│   ├── README.md
-│   └── .gitignore
-│
-├── .gitignore
-└── README.md
+.gitignore
+ README.md
 
 ##  Level Overviews....
 
